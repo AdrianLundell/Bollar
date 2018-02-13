@@ -5,7 +5,7 @@ import java.awt.Graphics;
 public class Projectile extends Ball {
 
     public Projectile(Box b) {
-        super(b, new Vector(Math.random(), Math.random()), Vector.randomVector(0.02+Math.random()*0.03), 3);
+        super(b, new Vector(Math.random(), Math.random()), Vector.randomVector((0.02+Math.random()*0.03)*0.01), 3);
     }
 
     @Override

@@ -15,6 +15,10 @@ public class Vector {
     return new Vector(getX() + v.getX(), getY() + v.getY());
   }
   
+  public double angle(Vector v){
+    return Math.atan2(this.distance(v), v.length());
+  }
+
   public double angle(){
     return Math.atan2(getY(), getX());
   }

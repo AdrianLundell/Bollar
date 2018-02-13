@@ -127,9 +127,8 @@ public class Box extends JPanel implements ActionListener {
       BallCheck.remove(b);
       for (Projectile p : ProjectileCheck) {
         if (b.getPos().distance(p.getPos()) <= b.getRad() + p.getRad()) {
-          Vector diff = p.getPos().sub(b.getPos());
-          b.split(diff);
-          removeBall(b);
+          b.split(p);
+          //removeBall(b);
         }
       }
       for (Ball b2 : BallCheck) {

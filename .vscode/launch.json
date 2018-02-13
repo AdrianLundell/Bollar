@@ -13,7 +13,8 @@
             "console": "internalConsole",
             "stopOnEntry": false,
             "mainClass": "com.boll.app.Window",
-            "args": ""
+            "args": "",
+            "projectName": "boll"
         },
         {
             "type": "java",

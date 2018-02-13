@@ -41,7 +41,10 @@ public class Ball {
 
     g.setColor(this.col);
     g.drawOval(x - r, y - r, r * 2, r * 2);
-//    g.drawLine(0, 0, x, y);
+    Vector vel = toSpace(this.vel).scale(10).add(v);
+
+//    g.drawLine(x, y, (int)vel.getX(), (int)vel.getY());    //Show position
+    g.drawLine(x, y, (int)vel.getX(), (int)vel.getY());  //Show velocity
   }
 
   public Vector toSpace(Vector v) {
@@ -124,25 +127,36 @@ public class Ball {
     Vector dPos = b.getPos().sub(getPos());
     Vector dVel = b.vel.sub(vel);
     double posSquared = Math.abs(dPos.length() * dPos.length());
-
+    
     this.setVel(getVel().add(dPos.scale(dVel.dot(dPos) / posSquared)));
     b.setVel(b.getVel().add(dPos.scale(dVel.scale(-1).dot(dPos) / posSquared)));
   }
 
-  protected void split(Vector diff) {
-    double r1=(this.getRad()+diff.length())/2;
-     double r2=(this.getRad()-diff.length())/2;
-     Vector pos1 = this.getPos().add(diff).sub(Vector.polar(r1, diff.angle()));
-     Vector pos2 = this.getPos().add(diff).add(Vector.polar(r2, diff.angle()));
+  protected void split(Projectile p) {
+    Vector ppos = p.getPos();
+    Vector pvel = p.getVel();
+    Vector diff = this.getPos().sub(ppos);
+    double diffAngle = pvel.angle(diff.add(this.pos));
+    double diffLength = diff.length()*Math.sin(diffAngle);
 
-     if(toSpace(r1)>2){
-        Ball b1 = new Ball(this.box, pos1, this.vel, toSpace(r1));
-        this.box.addBall(b1);
-     }
-     if(toSpace(r1)>2){    
-        Ball b2 = new Ball(this.box, pos2, this.vel, toSpace(r2));
-        this.box.addBall(b2);     
-     }
+    int a = toSpace(diffLength);
+    int b = toSpace(this.rad);
+    int i =1;
+
+
+    // double r1=
+    // double r2=
+    // Vector pos1 =
+    // Vector pos2 = =
+
+    //  if(toSpace(r1)>2){
+    //     Ball b1 = new Ball(this.box, pos1, this.vel, toSpace(r1));
+    //     this.box.addBall(b1);
+    //  }
+    //  if(toSpace(r1)>2){    
+    //     Ball b2 = new Ball(this.box, pos2, this.vel, toSpace(r2));
+    //     this.box.addBall(b2);     
+     
    }
 
 
