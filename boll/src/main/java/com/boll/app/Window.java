@@ -31,6 +31,6 @@ public class Window {
     }
 
     public static void main(String[] args) {
-        Window mainWindow = new Window();
+        Window w = new Window();
     }
 }   

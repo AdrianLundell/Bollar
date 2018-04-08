@@ -44,7 +44,7 @@ public class Ball {
     Vector vel = toSpace(this.vel).scale(10).add(v);
 
 //    g.drawLine(x, y, (int)vel.getX(), (int)vel.getY());    //Show position
-    g.drawLine(x, y, (int)vel.getX(), (int)vel.getY());  //Show velocity
+//    g.drawLine(x, y, (int)vel.getX(), (int)vel.getY());  //Show velocity
   }
 
   public Vector toSpace(Vector v) {
@@ -132,32 +132,7 @@ public class Ball {
     b.setVel(b.getVel().add(dPos.scale(dVel.scale(-1).dot(dPos) / posSquared)));
   }
 
-  protected void split(Projectile p) {
-    Vector ppos = p.getPos();
-    Vector pvel = p.getVel();
-    Vector diff = this.getPos().sub(ppos);
-    double diffAngle = pvel.angle(diff.add(this.pos));
-    double diffLength = diff.length()*Math.sin(diffAngle);
 
-    int a = toSpace(diffLength);
-    int b = toSpace(this.rad);
-    int i =1;
-
-
-    // double r1=
-    // double r2=
-    // Vector pos1 =
-    // Vector pos2 = =
-
-    //  if(toSpace(r1)>2){
-    //     Ball b1 = new Ball(this.box, pos1, this.vel, toSpace(r1));
-    //     this.box.addBall(b1);
-    //  }
-    //  if(toSpace(r1)>2){    
-    //     Ball b2 = new Ball(this.box, pos2, this.vel, toSpace(r2));
-    //     this.box.addBall(b2);     
-     
-   }
 
 
   //link http://www.it.uu.se/edu/course/homepage/prog2/vt17/assignments/graphics/bouncingBalls/bouncingBalls.pdfimport java.awt.Color;

@@ -13,6 +13,12 @@ public class Box extends JPanel implements ActionListener {
   private ArrayList<Ball> BallList = new ArrayList<Ball>();
   private ArrayList<Projectile> ProjectileList = new ArrayList<Projectile>();
 
+  private ArrayList<Ball> BallAddList = new ArrayList<Ball>();
+  private ArrayList<Projectile> ProjectileAddList = new ArrayList<Projectile>();
+
+  private ArrayList<Ball> BallRemoveList = new ArrayList<Ball>();
+  private ArrayList<Projectile> ProjectileRemoveList = new ArrayList<Projectile>(); 
+  
   private static Timer timer;
   private Window w;
 
@@ -23,23 +29,34 @@ public class Box extends JPanel implements ActionListener {
   }
 
   protected void removeBall(Ball b) {
-    BallList.remove(b);
+    BallRemoveList.add(b);
   }
 
   protected void removeBall() {
-    BallList.remove(0);
+    BallRemoveList.add(BallList.get(0));
   }
 
   protected void removeProjectile(Projectile p) {
-    ProjectileList.remove(p);
+    ProjectileRemoveList.add(p);
   }
 
   protected void addBall(Ball b) {
-    BallList.add(b);
+    BallAddList.add(b);
   }
 
   protected void addBall() {
-    BallList.add(new Ball(this));
+    Ball newB = new Ball(this);
+
+    for (Ball b : BallList){
+      Vector diff = newB.getPos().sub(b.getPos());
+      Double overlap = newB.getRad()+b.getRad()-diff.length();
+      if(overlap>0){
+        Vector m = Vector.polar(overlap, diff.angle());
+        newB.move(m);
+      }
+    }
+
+    BallAddList.add(newB);
   }
 
   protected int getSpaceSize() {
@@ -87,7 +104,7 @@ public class Box extends JPanel implements ActionListener {
 
   private void spawnProjectile() {
     if (Math.random() > 0.99)
-      ProjectileList.add(new Projectile(this));
+      ProjectileAddList.add(new Projectile(this));    
   }
 
   private void step() {
@@ -101,9 +118,20 @@ public class Box extends JPanel implements ActionListener {
     }
 
     for (Ball b : BallList) {
-      b.move();
+    b.move();
     }
     checkBallHit();
+
+    BallList.addAll(BallAddList);
+    ProjectileList.addAll(ProjectileAddList);
+    BallAddList.clear();
+    ProjectileAddList.clear();
+    
+    BallList.removeAll(BallRemoveList);
+    ProjectileList.removeAll(ProjectileRemoveList);
+    BallRemoveList.clear();
+    ProjectileRemoveList.clear();
+
     repaint();
   }
 
@@ -127,8 +155,7 @@ public class Box extends JPanel implements ActionListener {
       BallCheck.remove(b);
       for (Projectile p : ProjectileCheck) {
         if (b.getPos().distance(p.getPos()) <= b.getRad() + p.getRad()) {
-          b.split(p);
-          //removeBall(b);
+          p.split(b);
         }
       }
       for (Ball b2 : BallCheck) {
