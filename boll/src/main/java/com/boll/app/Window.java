@@ -8,7 +8,7 @@ public class Window {
     static GUI gui;
     static JFrame frame;
     final boolean INIT_START = true;
-    final int INIT_BALLS = 3;
+    final int INIT_BALLS = 4;
     final Dimension d = new Dimension(500, 500);
 
     protected Window() {

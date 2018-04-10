@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class GUI extends JFrame implements ActionListener{
   
-  private JButton active = new JButton("Stop");
+  private JButton onoff = new JButton("Stop");
   private JButton cancel = new JButton("Cancel");     
   private JButton restart = new JButton("Restart");         
-  private JTextField objects = new JTextField(10);
-  private JTextField rate = new JTextField(10);  
+  private JTextField objects = new JTextField("10",5);
+  private JTextField rate = new JTextField("10",5);  
   private Box b;  
   private int ballAmnt;
   private boolean isRunning;
@@ -22,13 +22,13 @@ public class GUI extends JFrame implements ActionListener{
     this.b=b;
     this.setLayout(new FlowLayout());
 
-    this.add(active); 
+    this.add(onoff); 
     this.add(cancel);    
     this.add(restart);     
     this.add(objects);     
     this.add(rate);  
 
-    active.addActionListener(this);     
+    onoff.addActionListener(this);     
     cancel.addActionListener(this);       
     restart.addActionListener(this);   
     objects.addActionListener(this);     
@@ -39,24 +39,30 @@ public class GUI extends JFrame implements ActionListener{
     this.pack();
     this.setVisible(true);
 
-    b.changeBallAmnt(ballAmnt);    
-    run(); 
+   init();
+    
+  }
+
+  public void init(){
+  this.actionPerformed(new ActionEvent(onoff, ActionEvent.ACTION_PERFORMED, null));
+  this.actionPerformed(new ActionEvent(objects, ActionEvent.ACTION_PERFORMED, null));
+  this.actionPerformed(new ActionEvent(rate, ActionEvent.ACTION_PERFORMED, null)); 
   }
 
   public void run() {
     if (isRunning) {
       b.stop();
-      active.setText("Start");
+      onoff.setText("Start");
       isRunning = false;
     } else {
       b.start();
-      active.setText("Stop");
+      onoff.setText("Stop");
       isRunning = true;
     }
   }
 
   public void actionPerformed(ActionEvent e) {
-    if (e.getSource() == active){
+    if (e.getSource() == onoff){
       run();
     }
     if (e.getSource() == cancel){

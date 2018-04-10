@@ -33,21 +33,22 @@ public class Projectile extends Ball {
 
       protected void split(Ball b) {
         Vector bpos = b.getPos();
-        Vector diff = this.getPos().sub(bpos);
-    
-        double r1 = (b.getRad()+diff.length())/2;
-        double r2 = (b.getRad()-diff.length()/2);
+        Vector v = getVel().ortagonal();
 
-        Vector p1 = this.pos.add(Vector.polar(r1, diff.angle()));
-        Vector p2 = this.pos.add(Vector.polar(-r2, diff.angle()));   
+        Vector diff = this.getPos().sub(bpos);
+        diff = diff.project(v);
+    
+        double r1 = (b.getRad()+diff.length())*0.5;
+        double r2 = Math.abs(b.getRad()-diff.length())*0.5;
+
+        Vector p1 = this.pos.add(Vector.polar(-(r1+this.getRad()), diff.angle()));
+        Vector p2 = this.pos.add(Vector.polar((r2+this.getRad()), diff.angle()));   
         
-        Vector v1 = Vector.polar(0.01, this.getVel().angle()+Math.PI/2);
-        Vector v2 = Vector.polar(-0.01, this.getVel().angle()+Math.PI/2);  
+        Vector v1 = b.getVel().add(Vector.polar(getVel().length(), v.angle()));
+        Vector v2 = b.getVel().add(Vector.polar(getVel().length(), v.angle()));  
 
         this.box.removeBall(b);
-           if (toSpace(r1)>4)
-        this.box.addBall(new Ball(this.box, p1, v1, toSpace(r1)));
-           if (toSpace(r2)>4)        
-        this.box.addBall(new Ball(this.box, p2, v2, toSpace(r2)));
+        if (toSpace(r1)>2){this.box.addBall(new Ball(this.box, p1, v1, toSpace(r1)));}
+        if (toSpace(r2)>2){this.box.addBall(new Ball(this.box, p2, v2, toSpace(r2)));}
        }       
 }

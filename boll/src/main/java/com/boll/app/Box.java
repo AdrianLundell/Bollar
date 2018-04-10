@@ -120,30 +120,27 @@ public class Box extends JPanel implements ActionListener {
     for (Ball b : BallList) {
     b.move();
     }
-    checkBallHit();
-
-    BallList.addAll(BallAddList);
-    ProjectileList.addAll(ProjectileAddList);
+ 
+    for (int i = 0; i < BallAddList.size(); i++) {
+      BallList.add(BallAddList.get(i));
+    }
+    for (int i = 0; i < ProjectileAddList.size(); i++) {
+      BallList.add(ProjectileAddList.get(i));
+    }
     BallAddList.clear();
     ProjectileAddList.clear();
     
-    BallList.removeAll(BallRemoveList);
-    ProjectileList.removeAll(ProjectileRemoveList);
+    for (int i = 0; i < BallAddList.size(); i++) {
+      BallList.remove(BallAddList.get(i));
+    }
+    for (int i = 0; i < ProjectileAddList.size(); i++) {
+      BallList.remove(ProjectileAddList.get(i));
+    }
     BallRemoveList.clear();
     ProjectileRemoveList.clear();
 
+    checkBallHit();
     repaint();
-  }
-
-  private Ball[] checkSplit(Ball b1, Ball b2) {
-    double a = Math.random();
-    if (a < 0.3)
-      return new Ball[] { b1, b2 };
-    if (a > 0.7)
-      return new Ball[] { b2, b1 };
-    else
-      return null;
-
   }
 
   protected void checkBallHit() {

@@ -38,7 +38,11 @@ public class Vector {
   public Vector flipSignY(){
     return new Vector(getX(), -getY());    
   }  
-  
+    
+  public Vector ortagonal(){
+    return polar(length(), angle()+Math.PI/2);    
+  }  
+
   public double getX(){
     return this.x;
   }
@@ -55,6 +59,10 @@ public class Vector {
     return new Vector(length*Math.cos(angle), length*Math.sin(angle));
   }
   
+  public Vector project(Vector v){
+    return polar(length()*Math.cos(angle(v)),v.angle());
+  }
+
   public static Vector randomVector(double len){
     return polar(len, Math.random()*2*Math.PI);
   }
